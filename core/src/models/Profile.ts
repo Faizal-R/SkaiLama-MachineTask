@@ -7,6 +7,7 @@ const profileSchema = new Schema<IProfile>(
       type: String,
       isRequired: true,
       minLength: 3,
+      unique:true
     },
   },
   {
@@ -14,6 +15,5 @@ const profileSchema = new Schema<IProfile>(
   },
 );
 
-const ProfileModel = model<IProfile>("Profile", profileSchema);
+export const Profile = model<IProfile>("Profile", profileSchema);
 
-export default ProfileModel;

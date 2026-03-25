@@ -1,6 +1,7 @@
 import { Schema, Types, model } from "mongoose";
+import { IEvent } from "./interfaces/IEvent.js";
 
-const eventSchema = new Schema(
+const eventSchema = new Schema<IEvent>(
   {
     profiles: [
       {
@@ -30,6 +31,5 @@ const eventSchema = new Schema(
   },
 );
 
-const profileModel = model("Event", eventSchema);
+export const Event = model<IEvent>("Event", eventSchema);
 
-export default profileModel;

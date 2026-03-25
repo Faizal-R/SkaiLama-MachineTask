@@ -19,4 +19,4 @@ const eventLogSchema = new Schema<IEventLog>(
 );
 
 
-export const EventLog = model<IEventLog>("EventLog", eventLogSchema);
+export  const EventLog = model<IEventLog>("EventLog", eventLogSchema);
