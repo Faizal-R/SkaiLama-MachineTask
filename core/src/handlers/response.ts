@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { statusCodes } from "../constants/statusCodes.js";
+import { statusCodes } from "../constants/enums/statusCodes.js";
 import { CustomError } from "../errors/customError.js";
 
 export function createResponse<T>(

@@ -6,8 +6,8 @@ import { CreateProfileDTO } from "../dto/profile/CreateProfileDTO.js";
 import { ProfileResponseDTO } from "../dto/profile/ProfileResponseDTO.js";
 import { ProfileMapper } from "../mapper/ProfileMapper.js";
 import { CustomError } from "../errors/customError.js";
-import { statusCodes } from "../constants/statusCodes.js";
-import { MongoErrorCodes } from "../constants/mongoErrorCodes.js";
+import { statusCodes } from "../constants/enums/statusCodes.js";
+import { MongoErrorCodes } from "../constants/enums/mongoErrorCodes.js";
 
 export class ProfileService implements IProfileService {
   constructor(

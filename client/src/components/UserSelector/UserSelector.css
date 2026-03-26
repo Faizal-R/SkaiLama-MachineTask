@@ -1,0 +1,100 @@
+.user-selector-wrapper {
+  position: relative;
+  width: 230px;
+  min-height: 40px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  cursor: pointer;
+  color:#333;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+  padding: 10px;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Search bar */
+.search-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.search-input input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* User list */
+.user-listing {
+  max-height: 120px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+
+.user-listing div {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.user-listing div:hover {
+  background: #f5f5f5;
+}
+
+/* Add profile section */
+.add-profile {
+  display: flex;
+  gap: 6px;
+}
+
+.add-profile input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.add-profile button {
+  padding: 6px 10px;
+  border: none;
+  background: #7c3aed;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-profile button:hover {
+  background: #6d28d9;
+}

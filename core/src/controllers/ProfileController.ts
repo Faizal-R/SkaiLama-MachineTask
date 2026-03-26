@@ -1,4 +1,4 @@
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { IProfileController } from "./interfaces/IProfileController.js";
 import { DI_TOKENS } from "../di/types.js";
 import type { IProfileService } from "../services/interfaces/IProfileService.js";
@@ -6,8 +6,8 @@ import { Request, Response, NextFunction } from "express";
 import { tryCatch } from "../handlers/tryCatch.js";
 import { CreateProfileDTO } from "../dto/profile/CreateProfileDTO.js";
 import { createResponse } from "../handlers/response.js";
-import { statusCodes } from "../constants/statusCodes.js";
-
+import { statusCodes } from "../constants/enums/statusCodes.js";
+@injectable()
 export class ProfileController implements IProfileController {
   constructor(
     @inject(DI_TOKENS.SERVICES.PROFILE)
@@ -15,6 +15,7 @@ export class ProfileController implements IProfileController {
   ) {}
   createProfile = tryCatch(async (req: Request, res: Response) => {
     const createProfileDto: CreateProfileDTO = req.body;
+    
     const createdProfile =
       await this._profileService.createProfile(createProfileDto);
     createResponse(
@@ -22,9 +23,7 @@ export class ProfileController implements IProfileController {
       statusCodes.CREATED,
       true,
       "Profile Created Successfully",
-      {
-        profile: createdProfile,
-      },
+      createdProfile
     );
   });
 
