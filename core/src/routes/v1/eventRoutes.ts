@@ -9,5 +9,8 @@ const router = Router();
 const eventController = resolve<IEventController>(DI_TOKENS.CONTROLLERS.EVENT);
 
 router.post("/", validate(eventSchema),eventController.createEvent);
+router.put("/", validate(eventSchema),eventController.updateEventDetails);
+router.get('/profile/:profileId',eventController.getEventsByProfile)
+router.get('/:eventId',eventController.getEventDetails)
 
 export default router;

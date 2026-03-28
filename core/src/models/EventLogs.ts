@@ -1,22 +1,28 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, Types, model } from "mongoose";
 import { IEventLog } from "./interfaces/IEventLogs.js";
 
 const eventLogSchema = new Schema<IEventLog>(
   {
     eventId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Event",
       required: true,
     },
-    updatedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "Profile",
+    field: {
+      type: String,
+      enum: ["timezone", "profiles", "startTime", "endTime"],
+      required: true,
+    },
+    oldValue: {
+      type: Schema.Types.Mixed,
+    },
+    newValue: {
+      type: Schema.Types.Mixed,
     },
   },
   {
-    timestamps: { createdAt: true, updatedAt: false },
-  }
+    timestamps: true,
+  },
 );
 
-
-export  const EventLog = model<IEventLog>("EventLog", eventLogSchema);
+export const EventLog = model<IEventLog>("EventLog", eventLogSchema);

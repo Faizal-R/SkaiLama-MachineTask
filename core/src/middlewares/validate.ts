@@ -8,6 +8,8 @@ export const validate = (schema: ZodSchema) =>
   tryCatch(async (req: Request, res: Response, next: NextFunction) => {
     const { data, success, error } = schema.safeParse(req.body);
     if (!success) {
+      console.log(req.body)
+      console.log(error)
       return createResponse(
         res,
         statusCodes.BAD_REQUEST,

@@ -19,7 +19,6 @@ export class ProfileService implements IProfileService {
     try {
       const entity = ProfileMapper.toEntity(dto);
       const createdProfile = await this._profileRespository.create(entity);
-      console.log(createdProfile)
       return ProfileMapper.toResponse(createdProfile);
     } catch (error: any) {
         console.log(error)
