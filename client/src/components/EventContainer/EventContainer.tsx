@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGetEventsByProfile } from "../../hooks/useEvents";
 import { useTimezoneStore } from "../../store/timezoneStore";
 import TimeZoneSelector, {
@@ -14,22 +14,22 @@ const EventContainer = () => {
   const { selectedTimezone, setSelectedTimezone } = useTimezoneStore();
   const { selectedProfile } = useProfileStore();
   const { events, setEvents } = useEventStore();
-
   const { getEventsByProfile } = useGetEventsByProfile();
 
   const fetchEventsByProfile = async () => {
-    const res = await getEventsByProfile(selectedProfile?.id as string);
+    if (!selectedProfile?.id) return;
+    const res = await getEventsByProfile(selectedProfile.id);
     setEvents(res.data || []);
   };
-  useEffect(() => {
-    if(selectedProfile){
 
-      fetchEventsByProfile();
-    }
+  useEffect(() => {
+    fetchEventsByProfile();
   }, [selectedProfile]);
+
   return (
     <div className="event-container">
-      <h1>Events</h1>
+      <h2 className="event-title">Events</h2>
+
       <div className="timezone-section">
         <label>View In Timezone</label>
         <TimeZoneSelector
@@ -40,10 +40,15 @@ const EventContainer = () => {
           mode="event-listing"
         />
       </div>
+
       <div className="event-listing">
-        {events.map((event: IEvent) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {events.length > 0 ? (
+          events.map((event: IEvent) => (
+            <EventCard key={event.id} event={event} />
+          ))
+        ) : (
+          <p className="empty-state">No events available</p>
+        )}
       </div>
     </div>
   );

@@ -20,8 +20,8 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [isProfileAdding, setIsProfileAdding] = useState(false);
   const [profileName, setProfileName] = useState("");
-  const [profiles, setProfiles] = useState<IProfile[]>([]);
 
+  const {profiles,setProfiles,addProfile}=useProfileStore()
   const { selectedProfile } = useProfileStore();
 
   const { createProfile } = useCreateProfile();
@@ -45,6 +45,7 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const handleCreateProfile = async () => {
     const response = await createProfile(profileName);
     console.log(response);
+     addProfile(response.data)
     toast(response.message);
     setProfileName("");
   };

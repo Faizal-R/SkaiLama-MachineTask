@@ -10,7 +10,7 @@ interface IEventLogHistoryModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-const EventLogHistoryModal: React.FC<IEventLogHistoryModalProps> = ({
+const EventLogHistoryModal:FC<IEventLogHistoryModalProps> = ({
   isOpen,
   onClose,
 
