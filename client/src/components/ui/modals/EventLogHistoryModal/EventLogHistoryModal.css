@@ -1,0 +1,71 @@
+.elh-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.elh-container {
+  background: #ffffff;
+  width: 520px;
+  max-width: 90%;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.elh-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.elh-header h2 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.elh-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.elh-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.elh-empty {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.elh-item {
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #fafafa;
+}
+
+.elh-time {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.elh-message {
+  font-size: 14px;
+  color: #333;
+}

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import EventManagementModal from "./components/modals/EventManagementModal/EventManagementModal";
+import EventManagementModal from "./components/ui/modals/EventManagementModal/EventManagementModal";
 import EventContainer from "./components/EventContainer/EventContainer";
-import UserSelector from "./components/UserSelector/UserSelector";
+import UserSelector from "./components/reusable/UserSelector/UserSelector";
+import { useProfileStore } from "./store/profileStore";
 
 export default function App() {
   const [open, setOpen] = useState(false);
-
+  const { setSelectedProfile } = useProfileStore();
   return (
     <div className="home">
       <div className="main-container">
@@ -15,7 +16,10 @@ export default function App() {
             <h1 id="heading-text">Event Managements</h1>
             <p>Create and Manage Events Across Multiple Timezone</p>
           </div>
-          <UserSelector mode="user-selection"/>
+          <UserSelector
+            mode="user-selection"
+            onHandleProfiles={setSelectedProfile}
+          />
           <button className="open-btn" onClick={() => setOpen(true)}>
             Create Event
           </button>
@@ -25,7 +29,11 @@ export default function App() {
         </div>
       </div>
 
-      <EventManagementModal isOpen={open} onClose={() => setOpen(false)} />
+      <EventManagementModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        mode="create-event"
+      />
     </div>
   );
 }

@@ -1,13 +1,12 @@
-.main-container{
+.main-container {
   height: 600px;
   width: 60%;
-  background: white;
+  background: rgb(249, 229, 229);
   border-radius: 10px;
   padding: 10px 50px;
 }
 
-
-.home{
+.home {
   width: 100%;
   height: 100%;
   display: flex;
@@ -18,19 +17,17 @@
   padding: 50px;
 }
 
-
-
-.heading{
+.heading {
   display: flex;
   justify-content: space-between;
   padding: 20px;
   gap: 40px;
 }
-.heading div > p{
- color: gray;
- font-weight: bold;
- font-size: medium;
- opacity: .75;
+.heading div > p {
+  color: gray;
+  font-weight: bold;
+  font-size: medium;
+  opacity: 0.75;
 }
 
 .open-btn {
@@ -44,8 +41,9 @@
   font-weight: 800;
 }
 
-.event-user-container{
+.event-user-container {
   width: 100%;
   height: 80%;
-  background-color: bisque;
+  /* border: 1px solid; */
+  padding: 10px;
 }

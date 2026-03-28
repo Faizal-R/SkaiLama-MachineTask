@@ -1,5 +1,23 @@
-.event-container{
-    background-color: yellow;
-    height: 100%;
-    width: 70%;
+.event-container {
+  height: 100%;
+  width: 100%;
+ 
+}
+
+.timezone-section {
+  margin-top: 10px;
+}
+
+.event-listing {
+  width: 100%;
+  margin-top: 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  justify-content: flex-start;
+
+  max-height: 70%;
+  overflow-y: auto;
 }

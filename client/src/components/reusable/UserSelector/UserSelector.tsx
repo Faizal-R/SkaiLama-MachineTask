@@ -1,13 +1,15 @@
 import { Check, ChevronDown, Plus, Search } from "lucide-react";
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
 import "./UserSelector.css";
-import { useCreateProfile, useGetAllProfiles } from "../../hooks/useProfile";
+import { useCreateProfile, useGetAllProfiles } from "../../../hooks/useProfile";
 import { toast } from "sonner";
+import type { IProfile } from "../../../types/interfaces/IProfile";
+import { useProfileStore } from "../../../store/profileStore";
 
 interface IUserSelectorProps {
   mode: string;
   selectedProfiles?: string[];
-  onHandleProfiles: (profileId: string) => void;
+  onHandleProfiles: (profile: string | IProfile) => void;
 }
 
 const UserSelector: FC<IUserSelectorProps> = ({
@@ -18,7 +20,9 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [isProfileAdding, setIsProfileAdding] = useState(false);
   const [profileName, setProfileName] = useState("");
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState<IProfile[]>([]);
+
+  const { selectedProfile } = useProfileStore();
 
   const { createProfile } = useCreateProfile();
   const { getAllProfiles } = useGetAllProfiles();
@@ -32,6 +36,12 @@ const UserSelector: FC<IUserSelectorProps> = ({
     setIsProfileAdding(false);
   };
 
+  const onHandleUserSelect = (profile: IProfile) => {
+    console.log(profile);
+    onHandleProfiles(profile);
+    onSelectorClose();
+  };
+
   const handleCreateProfile = async () => {
     const response = await createProfile(profileName);
     console.log(response);
@@ -42,7 +52,7 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const fetchAllProfiles = async () => {
     const response = await getAllProfiles();
     console.log(response);
-    setProfiles(response.data);
+    setProfiles(response.data || []);
   };
 
   useEffect(() => {
@@ -61,7 +71,9 @@ const UserSelector: FC<IUserSelectorProps> = ({
       <span>
         {mode == "event-form"
           ? `${selectedProfiles?.length} Profiles Selected`
-          : "Select Current User"}
+          : selectedProfile
+            ? selectedProfile.name
+            : "Select Current User"}
       </span>
       <ChevronDown size={16} className="arrow" />
 
@@ -74,22 +86,31 @@ const UserSelector: FC<IUserSelectorProps> = ({
               ✕
             </button>
           </div>
-
-          {/* User list */}
           <div className="user-listing">
-            {(profiles || []).map((profile) => (
-              <div
-                onClick={() => onHandleProfiles(profile.id)}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                {mode == "event-form" &&
-                  selectedProfiles?.includes(profile.id) && <Check size={16} />}
-                <div key={profile.id}>{profile.name}</div>
+            {profiles.length == 0 ? (
+              <div style={{ textAlign: "center", padding: "15px" }}>
+                No Profile Found
               </div>
-            ))}
+            ) : (
+              (profiles || []).map((profile) => (
+                <div
+                  onClick={() =>
+                    mode == "event-form"
+                      ? onHandleProfiles(profile.id)
+                      : onHandleUserSelect(profile)
+                  }
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  {mode == "event-form"
+                    ? selectedProfiles?.includes(profile.id) && (
+                        <Check size={16} />
+                      )
+                    : selectedProfile?.id == profile.id && <Check size={16} />}
+                  <div key={profile.id}>{profile.name}</div>
+                </div>
+              ))
+            )}
           </div>
-
-          {/* Add profile */}
           <div className="add-profile">
             {isProfileAdding ? (
               <>

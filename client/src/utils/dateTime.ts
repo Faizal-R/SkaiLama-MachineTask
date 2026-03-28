@@ -14,14 +14,17 @@ export const formatDateTimeParts = (isoString: string, tz: string) => {
     time: d.format("hh:mm A"),       
   };
 };
+export const splitISOToDateTime = (isoString: string) => {
+  const d = dayjs(isoString);
+
+  return {
+    date: d.format("YYYY-MM-DD"),
+    time: d.format("HH:mm"),
+  };
+};
 export const toUTCISOString = (date: string, time: string, tz: string) => {
   return dayjs.tz(`${date} ${time}`, tz).utc().toISOString();
 };
-
-export const toZonedDate = (date: string, time: string, tz: string) => {
-  return dayjs.tz(`${date} ${time}`, tz);
-};
-
 
 export const getEventPayload = (
   startDate: string,
@@ -45,6 +48,6 @@ export const getEventPayload = (
   };
 };
 
-export const formateDateWithOrdinal = (date: string) => {
+export const formatDateWithOrdinal = (date: string) => {
   return dayjs(date).format("MMMM Do YYYY");
 };
