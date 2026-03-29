@@ -20,8 +20,9 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [isProfileAdding, setIsProfileAdding] = useState(false);
   const [profileName, setProfileName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const {profiles,setProfiles,addProfile}=useProfileStore()
+  const { profiles, setProfiles, addProfile } = useProfileStore();
   const { selectedProfile } = useProfileStore();
 
   const { createProfile } = useCreateProfile();
@@ -45,7 +46,7 @@ const UserSelector: FC<IUserSelectorProps> = ({
   const handleCreateProfile = async () => {
     const response = await createProfile(profileName);
     console.log(response);
-     addProfile(response.data)
+    addProfile(response.data);
     toast(response.message);
     setProfileName("");
   };
@@ -59,6 +60,10 @@ const UserSelector: FC<IUserSelectorProps> = ({
   useEffect(() => {
     fetchAllProfiles();
   }, []);
+
+  const filteredProfiles = profiles.filter((profile) =>
+  profile.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <div
@@ -82,18 +87,23 @@ const UserSelector: FC<IUserSelectorProps> = ({
         <div className="dropdown" onClick={(e) => e.stopPropagation()}>
           <div className="search-input">
             <Search size={14} />
-            <input type="text" placeholder="search current profiles" />
+            <input
+              type="text"
+              placeholder="Search profiles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <button className="close-btn" onClick={onSelectorClose}>
               ✕
             </button>
           </div>
           <div className="user-listing">
-            {profiles.length == 0 ? (
+            {filteredProfiles.length == 0 ? (
               <div style={{ textAlign: "center", padding: "15px" }}>
                 No Profile Found
               </div>
             ) : (
-              (profiles || []).map((profile) => (
+              (filteredProfiles || []).map((profile) => (
                 <div
                   onClick={() =>
                     mode == "event-form"

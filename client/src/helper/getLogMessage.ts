@@ -2,13 +2,17 @@ import { TIMEZONE_OPTIONS } from "../constants/data/timezones";
 import type { IEventLog } from "../types/interfaces/IEvent";
 import { formatDateTimeParts } from "../utils/dateTime";
 
-export const getLogMessage = (log:IEventLog, tz: string): string => {
+export const getLogMessage = (log: IEventLog, tz: string): string => {
   switch (log.field) {
-    case "timezone":{
-     const oldTimezone=TIMEZONE_OPTIONS.find(tz=>tz.value==log.oldValue)
-     const newTimezone=TIMEZONE_OPTIONS.find(tz=>tz.value==log.newValue)
-     
-        return `Timezone changed from ${oldTimezone?.label} to ${newTimezone?.label}`;
+    case "timezone": {
+      const oldTimezone = TIMEZONE_OPTIONS.find(
+        (tz) => tz.value == log.oldValue,
+      );
+      const newTimezone = TIMEZONE_OPTIONS.find(
+        (tz) => tz.value == log.newValue,
+      );
+
+      return `Timezone changed from ${oldTimezone?.label} to ${newTimezone?.label}`;
     }
 
     case "startTime": {
@@ -26,25 +30,13 @@ export const getLogMessage = (log:IEventLog, tz: string): string => {
     }
 
     case "profiles": {
-      const oldProfiles = (log.oldValue as string[]) || [];
-      const newProfiles = (log.newValue as string[]) || [];
+      const oldProfiles = (log.oldValue as { name: string }[]) || [];
+      const newProfiles = (log.newValue as { name: string }[]) || [];
 
-      const added = newProfiles.filter(id => !oldProfiles.includes(id));
-      const removed = oldProfiles.filter(id => !newProfiles.includes(id));
+      const oldNames = oldProfiles.map((p) => p.name).join(", ");
+      const newNames = newProfiles.map((p) => p.name).join(", ");
 
-      if (added.length && removed.length) {
-        return `${added.length} participant(s) added, ${removed.length} removed`;
-      }
-
-      if (added.length) {
-        return `${added.length} participant(s) added`;
-      }
-
-      if (removed.length) {
-        return `${removed.length} participant(s) removed`;
-      }
-
-      return "Participants updated";
+      return `Participants changed from [${oldNames || "None"}] to [${newNames || "None"}]`;
     }
 
     default:
